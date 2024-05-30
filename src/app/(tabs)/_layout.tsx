@@ -27,7 +27,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="favorite"
         options={{
-          title: 'favorite',
+          title: 'Favorite',
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon name={focused ? 'heart' : 'heart-outline'} color={color} />
           ),
@@ -36,7 +36,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="product"
         options={{
-          title: 'product',
+          title: 'Product',
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon name={focused ? 'bag' : 'bag-outline'} color={color} />
           ),
@@ -45,7 +45,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="noti"
         options={{
-          title: 'notification',
+          title: 'Notification',
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon name={focused ? 'notifications' : 'notifications-outline'} color={color} />
           ),
