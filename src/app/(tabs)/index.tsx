@@ -1,9 +1,9 @@
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, Image, FlatList } from 'react-native'
-import React from 'react'
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import {ProductsData} from '../../constants/data.js';
 import Product from './product';
+
 
 const  Home = () => {
   return (
@@ -92,12 +92,13 @@ const  Home = () => {
         renderItem={({item}) => <Product ProductsData={item} />}
 
       />   */}
-      <View style={{alignItems: 'center' ,position: 'relative', bottom: 50,}}>
+      {/* <View style={{alignItems: 'center' ,position: 'relative', bottom: 50,}}>
         <Product/>
-      </View>
-      <View style={styles.bodyContainer}>
-        <Text>Home</Text>
-      </View>
+      </View> */}
+      {/* <View style={styles.bodyContainer}>
+        <Text>{setMovieData.original_date}</Text>
+      </View> */}
+      <Product />
     </View>
   )
 }
@@ -178,4 +179,5 @@ const styles = StyleSheet.create({
   },
   bodyContainer:{
   },
+
 })

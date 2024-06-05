@@ -1,79 +1,96 @@
-import { View, Text,StyleSheet, Image, TouchableOpacity, ScrollView } from 'react-native'
-import React from 'react'
+import { View, Text,StyleSheet, Image, FlatList, ScrollView } from 'react-native'
 import  { ProductsData}  from '../../constants/data.js'
 import { Ionicons } from '@expo/vector-icons'
+import React, { useEffect, useState } from 'react';
 
-export default function product(){
-  return (
-    <ScrollView>
-      {ProductsData.map((item) => (
-        <View style={styles.container}>
-        <View>
-          <Image style={styles.img} source={item.img} />
-          <View style={styles.stats}>
-            <Image source={item.stats.star}/>
-            <Text style={{color: '#fff', fontFamily: 'sora', paddingLeft: 3}}>{item.stats.rate}</Text>
-          </View>
-        </View>
-        <Text style={styles.name}>{item.name}</Text>
-        <Text style={styles.nameCall}>{item.nameCall}</Text>
-        <View style={styles.priceAdd}>
-          <Text style={styles.price}>$ {item.price}</Text>
-          <TouchableOpacity style={{backgroundColor: '#C67C4E', width: 30, height: 30, borderRadius: 8, display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-            <Ionicons name='add-outline'  size={16} color={'#fff'}/>
-          </TouchableOpacity>
-        </View>
+export default function Product(){
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch('https://fake-coffee-api.vercel.app/api')
+      .then(response => response.json())
+      .then(json => {
+        setData(json);
+        setLoading(false);
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) {
+    return (
+      <View style={{display: 'flex', alignItems: 'center'}}>
+        <Image source={require('../../../assets/images/loading.gif')} style={{height: 200, width: 200}} />
       </View>
-      ))}
-    </ScrollView>
-  )
-}
+    );
+  }
 
+  return (
+    <View style={styles.container}>
+      <FlatList
+        data={data}
+        keyExtractor={(item, index) => index.toString()}
+        numColumns={2}
+        showsVerticalScrollIndicator={false}
+        renderItem={({ item }) => (
+          <View style={styles.card}>
+            <Image source={{ uri: item.image_url }} style={styles.image} />
+            <Text style={styles.title}>Name: {item.name}</Text>
+            <Text style={styles.text}>Description: {item.description}</Text>
+            <Text style={styles.text}>Price: {item.price}</Text>
+          </View>
+        )}
+      />
+    </View>
+  );
+}
 
 const styles = StyleSheet.create({
   container: {
-    maxWidth: 200,
-    paddingBottom: 20,
-    
+    flex: 1,
+    position: 'relative',
+    top: -50,
+    padding: 10,
+    marginHorizontal: 10,
+    marginBottom: -10,
+    fontSize: 10,
   },
-  name:{
-    color: '#242424',
-    fontSize: 16,
-    fontFamily: 'sora',
-    fontWeight: '600',
-    lineHeight: 24,
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  nameCall:{
-    color: '#A2A2A2',
+  card: {
+    backgroundColor: '#8a8a8a',
+    borderRadius: 8,
+    padding: 10,
+    marginVertical: 10,
+    shadowColor: '#000',
+    margin: 5,
+    flex: 1,
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  image: {
+    width: '100%',
+    height: 200,
+    borderRadius: 8,
+  },
+  title: {
     fontSize: 12,
-    fontFamily: 'sora',
-    fontWeight: '400',
-    lineHeight: 14.40,
-    paddingTop: 10,
+    fontWeight: 'bold',
+    marginTop: 10,
   },
-  price:{
-    color: '#050505',
-    fontSize: 18,
-    fontFamily: 'sora',
-    fontWeight: '600',
-    lineHeight: 27,
-  },
-  img:{
-    borderRadius: 12,
-  },
-  stats:{
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    position: 'absolute',
-    right: 20,
-    top: 10
-  },
-  priceAdd:{
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingTop: 15,
-  },
-})
+  text:{
+    fontSize: 10,
+    marginTop: 10,
+  }
+});
