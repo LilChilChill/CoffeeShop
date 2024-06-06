@@ -2,10 +2,13 @@ import { View, Text, StyleSheet, TextInput, TouchableOpacity, Image, FlatList } 
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import {ProductsData} from '../../constants/data.js';
-import Product from './product';
+import Product from '../component/Product';
+import React, {useState, useEffect} from 'react';
+import Categories from '../component/Categories';
 
-
+const categories = ['All Coffee', 'Machiato', 'Latte', 'Americano' ]
 const  Home = () => {
+  const [selectedCategory, setSelectedCategory] = useState([])
   return (
     <View style={styles.container}>
       <LinearGradient colors={['#313131','#111111']} start={{x:0, y:1}} end={{x:1, y:0}} style={styles.headerContainer}>
@@ -98,6 +101,22 @@ const  Home = () => {
       {/* <View style={styles.bodyContainer}>
         <Text>{setMovieData.original_date}</Text>
       </View> */}
+      <View>
+        <FlatList
+        style={{position: 'absolute',bottom: 70, marginHorizontal: 20}}
+          data={categories}
+          renderItem={({item}) => (
+            <Categories 
+              item={item}
+              selectedCategory={selectedCategory}
+              setSelectedCategory={setSelectedCategory}
+            />
+          )}
+          keyExtractor={(item) => item}
+          horizontal={true}
+          showsHorizontalScrollIndicator={false}
+        />
+      </View>
       <Product />
     </View>
   )
