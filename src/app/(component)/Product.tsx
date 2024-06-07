@@ -1,14 +1,16 @@
-import { View, Text,StyleSheet, Image, FlatList, ScrollView } from 'react-native'
+import { View, Text,StyleSheet, Image, FlatList, ScrollView, TouchableOpacity, Touchable } from 'react-native'
 import  { ProductsData}  from '../../constants/data.js'
 import { Ionicons } from '@expo/vector-icons'
 import React, { useEffect, useState } from 'react';
+import { Redirect, router } from 'expo-router';
+import Detail from '../(auth)/Detail';
 
 export default function Product(){
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
-    fetch('https://fake-coffee-api.vercel.app/api')
-    // fetch('https://mocki.io/v1/79c3f8b4-9857-4b0b-a69a-2fff3a88b9d1')
+    fetch('http://10.103.6.157:3000/coffee')
+    // fetch('http://localhost:3000/coffee')
       .then(response => response.json())
       .then(json => {
         setData(json);
@@ -30,21 +32,25 @@ export default function Product(){
 
   return (
     <View style={styles.container}>
-      <FlatList
-        data={data}
-        keyExtractor={(item, index) => index.toString()}
-        numColumns={2}
-        showsVerticalScrollIndicator={false}
-        renderItem={({ item }) => (
-          <View style={styles.card}>
-            <Image source={{ uri: item.image_url }} style={styles.image} />
-            <Text style={styles.title}>Name: {item.name}</Text>
-            <Text style={styles.text}>Description: {item.description}</Text>
-            <Text style={styles.text}>Price: {item.price}</Text>
-          </View>
-        )}
-      />
+        <FlatList
+          data={data}
+          keyExtractor={(item, index) => index.toString()}
+          numColumns={2}
+          showsVerticalScrollIndicator={false}
+          renderItem={({ item }) => (
+            <TouchableOpacity style={styles.card} onPress={() => router.push('Detail')}>
+              <View >
+                <Image source={{ uri: item.image_url }} style={styles.image} />
+                <Text style={styles.title}>Name: {item.name}</Text>
+                <Text style={styles.text}>Description: {item.description}</Text>
+                <Text style={styles.text}>Price: {item.price}</Text>
+              </View>
+            </TouchableOpacity>
+          )}
+        />
     </View>
+
+  
   );
 }
 

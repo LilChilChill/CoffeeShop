@@ -1,10 +1,9 @@
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, Image, FlatList } from 'react-native'
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
-import {ProductsData} from '../../constants/data.js';
-import Product from '../component/Product';
+import Product from '../(component)/Product';
 import React, {useState, useEffect} from 'react';
-import Categories from '../component/Categories';
+import Categories from '../(component)/Categories';
 
 const categories = ['All Coffee', 'Machiato', 'Latte', 'Americano' ]
 const  Home = () => {
