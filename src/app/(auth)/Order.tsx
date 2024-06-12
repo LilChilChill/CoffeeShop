@@ -1,9 +1,9 @@
-import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Image, Alert, StatusBar } from 'react-native'
+import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Image, Alert } from 'react-native'
 import React, { useState } from 'react'
 import { Ionicons } from '@expo/vector-icons'
 import { router } from 'expo-router'
 
-const Cart = () => {
+const Order = () => {
   const [productNum, setProductNum] = useState(1)
   const [price, setPrice] = useState(4.53)
   const handleAddProduct = () => {
@@ -38,7 +38,6 @@ const Cart = () => {
   }
   return (
     <ScrollView style={styles.container}>
-      <StatusBar backgroundColor={'#000'} />
       <View style={styles.head}>
         <TouchableOpacity onPress={() => router.back()}>
           <Ionicons name='chevron-back' size={24} />    
@@ -169,7 +168,7 @@ const Cart = () => {
           </TouchableOpacity>
         </View>
 
-        <View style={{marginHorizontal: 24, marginBottom: 13 }}>
+        <View style={{marginHorizontal: 24, marginBottom: 90 }}>
           <TouchableOpacity style={styles.orderBtn} onPress={handleOrder}>
             <Text style={styles.orderText}>
               Order
@@ -180,7 +179,7 @@ const Cart = () => {
     </ScrollView>
   )
 }
-export default Cart
+export default Order
 
 function Selection({title, onPress, value}) {
   return (
@@ -221,7 +220,7 @@ const styles = StyleSheet.create({
     },
     btnText:{
       textAlign: 'center',
-      fontWeight: 400
+      fontWeight: 400,
     },
     title:{
       color: '#242424',

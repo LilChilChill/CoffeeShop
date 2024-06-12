@@ -7,7 +7,8 @@
       "price": 12.99,
       "region": "Africa",
       "weight": 500,
-      "image_url": "https://iili.io/H8Y7r4s.webp"
+      "image_url": "https://iili.io/H8Y7r4s.webp",
+      "category": "Machiato"
     },
     {
       "id": "6",
@@ -16,7 +17,8 @@
       "price": 9.99,
       "region": "South America",
       "weight": 500,
-      "image_url": "https://iili.io/H8Y7gGn.webp"
+      "image_url": "https://iili.io/H8Y7gGn.webp",
+      "category": "Machiato"
     },
     {
       "id": "8",
@@ -25,7 +27,8 @@
       "price": 13.99,
       "region": "Asia Pacific",
       "weight": 500,
-      "image_url": "https://iili.io/H8Y7wYv.webp"
+      "image_url": "https://iili.io/H8Y7wYv.webp",
+      "category": "Machiato"
     },
     {
       "id": "9",
@@ -34,7 +37,8 @@
       "price": 12.99,
       "region": "Africa",
       "weight": 500,
-      "image_url": "https://iili.io/H8Y7VCF.webp"
+      "image_url": "https://iili.io/H8Y7VCF.webp",
+      "category": "Machiato"
     },
     {
       "id": "10"
@@ -46,7 +50,8 @@
       "price": 10.99,
       "region": "South America",
       "weight": 500,
-      "image_url": "https://iili.io/H8Y5Sgj.webp"
+      "image_url": "https://iili.io/H8Y5Sgj.webp",
+      "category": "Latte"
     },
     {
       "id": "13",
@@ -55,7 +60,8 @@
       "price": 9.99,
       "region": "Asia Pacific",
       "weight": 500,
-      "image_url": "https://iili.io/H8Y7GQ1.webp"
+      "image_url": "https://iili.io/H8Y7GQ1.webp",
+      "category": "Latte"
     },
     {
       "id": "14",
@@ -64,7 +70,8 @@
       "price": 13.99,
       "region": "Middle East",
       "weight": 500,
-      "image_url": "https://iili.io/H8Y7ckQ.webp"
+      "image_url": "https://iili.io/H8Y7ckQ.webp",
+      "category": "Latte"
     },
     {
       "id": "16",
@@ -73,7 +80,8 @@
       "price": 12.99,
       "region": "Asia Pacific",
       "weight": 500,
-      "image_url": "https://iili.io/H8Y7j3J.webp"
+      "image_url": "https://iili.io/H8Y7j3J.webp",
+      "category": "Latte"
     },
     {
       "id": "18",
@@ -82,7 +90,8 @@
       "price": 11.99,
       "region": "Asia Pacific",
       "weight": 500,
-      "image_url": "https://iili.io/H8Y71TB.webp"
+      "image_url": "https://iili.io/H8Y71TB.webp",
+      "category": "Americano"
     },
     {
       "id": "19",
@@ -91,17 +100,20 @@
       "region": "Central America",
       "weight": 500,
       "image_url": "https://iili.io/H8Y7aYx.webp",
-      "price": 9.99
+      "price": 9.99,
+      "category": "Americano"
     },
     {
       "id": "1",
       "name": "Name",
-      "price": "10000"
+      "price": "10000",
+      "category": "Americano"
     },
     {
       "name": "Coffee Street ",
       "price": "48",
-      "id": "22"
+      "id": "22",
+      "category": "Americano"
     }
   ]
 }

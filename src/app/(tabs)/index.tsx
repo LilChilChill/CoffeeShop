@@ -89,17 +89,7 @@ const  Home = () => {
             </View>
           </LinearGradient>
         </View>
-      {/* <FlatList
-        data={ProductsData}
-        renderItem={({item}) => <Product ProductsData={item} />}
-
-      />   */}
-      {/* <View style={{alignItems: 'center' ,position: 'relative', bottom: 50,}}>
-        <Product/>
-      </View> */}
-      {/* <View style={styles.bodyContainer}>
-        <Text>{setMovieData.original_date}</Text>
-      </View> */}
+      
       <View>
         <FlatList
         style={{position: 'absolute',bottom: 70, marginHorizontal: 20}}
@@ -116,7 +106,7 @@ const  Home = () => {
           showsHorizontalScrollIndicator={false}
         />
       </View>
-      <Product />
+      <Product onChange={selectedCategory} />
     </View>
   )
 }

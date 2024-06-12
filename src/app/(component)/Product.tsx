@@ -3,17 +3,21 @@ import  { ProductsData}  from '../../constants/data.js'
 import { Ionicons } from '@expo/vector-icons'
 import React, { useEffect, useState } from 'react';
 import { Redirect, router } from 'expo-router';
-import Detail from '../(auth)/Detail';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Product(){
-  const [data, setData] = useState([]);
+  const [product, setProduct] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [filteredProduct, setFilteredProduct] = useState([])
+  const [itemCategory, setItemCategory] = useState([])
+  
   useEffect(() => {
-    fetch('http://10.103.6.157:3000/coffee')
+    fetch(`http://10.103.6.120:3000/coffee/?category=${itemCategory}`)
     // fetch('http://localhost:3000/coffee')
       .then(response => response.json())
       .then(json => {
-        setData(json);
+        setProduct(json);
+        setFilteredProduct(json)
         setLoading(false);
       })
       .catch(error => {
@@ -22,18 +26,12 @@ export default function Product(){
       });
   }, []);
 
-  if (loading) {
-    return (
-      <View style={{display: 'flex', alignItems: 'center'}}>
-        <Image source={require('../../../assets/images/loading.gif')} style={{height: 100, width: 100}} />
-      </View>
-    );
-  }
-
+  
+  
   return (
     <View style={styles.container}>
         <FlatList
-          data={data}
+          data={product}
           keyExtractor={(item, index) => index.toString()}
           numColumns={2}
           showsVerticalScrollIndicator={false}
@@ -42,9 +40,15 @@ export default function Product(){
               <View >
                 <Image source={{ uri: item.image_url }} style={styles.image} />
                 <Text style={styles.title}>Name: {item.name}</Text>
-                <Text style={styles.text}>Description: {item.description}</Text>
+                {/* <Text style={styles.text}>Description: {item.description}</Text> */}
                 <Text style={styles.text}>Price: {item.price}</Text>
               </View>
+              <TouchableOpacity style={{position: 'absolute', top: 10, left: 10}} >
+                <Ionicons name='heart-outline' size={20} />
+              </TouchableOpacity>
+              <Text style={{position: 'absolute', top: 10, right: 10}}>
+                <Image source={require('../../constants/img/Star.png')} /> 4.8
+              </Text>
             </TouchableOpacity>
           )}
         />

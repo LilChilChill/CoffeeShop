@@ -1,19 +1,45 @@
-import { StyleSheet, Text, View, SafeAreaView,TouchableOpacity, Image, StatusBar} from 'react-native'
-import React from 'react'
+import { StyleSheet, Text, View, SafeAreaView,TouchableOpacity, Image, StatusBar, ScrollView, Alert} from 'react-native'
+import React, { useState } from 'react'
 import { Ionicons } from '@expo/vector-icons'
+import { router } from 'expo-router'
+import ReadMore from '@fawazahmed/react-native-read-more'
+export default function Detail() {
+  const [sizeSelected, setSizeSelected] = useState(null)
+  const [favoriteItems, setFavoriteItem] = useState([])
+  
+  const handleSelected = (value) =>{
+    setSizeSelected(value)
+  }
 
-const Detail = () => {
+  _renderTruncatedFooter = (handlePress) => {
+    return (
+      <Text style={{
+        color: '#C67C4E',
+        fontSize: 14,
+        fontFamily: 'Sora',
+        fontWeight: '600',
+        lineHeight: 21,
+      }} onPress={handlePress}>
+        more
+      </Text>
+    );
+  }
+
+
   return (
-    <SafeAreaView style={styles.container}>
+    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       <StatusBar backgroundColor={'#000'} />
+      
       <View style={styles.head}>
-        <TouchableOpacity >
+        <TouchableOpacity onPress={() => router.back()} >
           <Ionicons name='chevron-back' size={24}/>
         </TouchableOpacity>
         <Text style={{ color: '#242424', fontSize: 16, fontFamily: 'sora', fontWeight: '600', lineHeight: 19.20, }}>
           Detail
         </Text>
-        <TouchableOpacity>
+        <TouchableOpacity 
+          onPress={() => alert('Add to wishlish success')}
+        >
           <Ionicons name='heart-outline' size={24}/>
         </TouchableOpacity>
       </View>
@@ -26,19 +52,19 @@ const Detail = () => {
         <Text style={{ marginTop: 16, color: '#242424', fontSize: 20, fontFamily: 'sora', fontWeight: '600', lineHeight: 30,}}>
           Caffee Mocha
         </Text>
-        <View>
+        <View style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
           <Text style={{color: '#A2A2A2', fontSize: 12, fontFamily: 'sora', fontWeight: '400', lineHeight: 14.40,}}>
             Ice/Hot
           </Text>
-          <View>
-            <Image source={require('../../constants/img/ship.png')}/>
-            <Image source={require('../../constants/img/bean.png')}/>
-            <Image source={require('../../constants/img/pack.png')}/>
+          <View style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
+            <Image style={{width: 36, height: 24,}} source={require('../../constants/img/delivery.png')}/>
+            <Image style={{width: 24, height: 24, marginLeft: 20}} source={require('../../constants/img/bean.png')}/>
+            <Image style={{width: 30, height: 30, marginLeft: 20}} source={require('../../constants/img/packaging 1.png')}/>
           </View>
         </View>
       </View>
 
-      <View style={{ marginTop: 16, display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
+      <View style={{ marginTop: 16, display: 'flex', flexDirection: 'row', alignItems: 'center',}}>
         <Image style={{height: 20, width: 20}} source={require('../../constants/img/Star.png')}/>
         <Text style={{
           color: '#2A2A2A',
@@ -59,7 +85,7 @@ const Detail = () => {
             (230)
         </Text>
       </View>
-
+      
       <View style={{borderWidth: 1, marginVertical: 16, borderColor: '#E3E3E3'}}></View>
 
       <Text style={{color: '#242424',
@@ -72,23 +98,76 @@ const Detail = () => {
       </Text>
 
       <View style={{marginTop: 8}}>
-        <Text style={styles.description}>
+        <ReadMore style={styles.description} numberOfLines={3} renderTruncatedFooter={this._renderTruncatedFooter}> 
           Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eaque earum ad illo delectus! Exercitationem, sequi natus. Accusamus voluptas, doloribus vero magni itaque placeat quos sequi dicta. Laborum corrupti aliquam hic?
-        </Text>
+        </ReadMore>
       </View>
-    </SafeAreaView>
+
+      <Text style={{
+        marginTop: 24,
+        color: '#242424',
+        fontSize: 16,
+        fontFamily: 'sora',
+        fontWeight: '600',
+        lineHeight: 24,
+        }}>
+        Size
+      </Text>
+
+      <View style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginTop: 16}}>
+        <SizeSelection 
+          title={'S'}
+          onPress={handleSelected}
+          value={sizeSelected}
+        />
+        <SizeSelection 
+          title={'M'}
+          onPress={handleSelected}
+          value={sizeSelected}
+        />
+        <SizeSelection 
+          title={'L'}
+          onPress={handleSelected}
+          value={sizeSelected}
+        />
+      </View>
+
+      <View style={{marginTop: 24, display: 'flex', flexDirection: 'row', justifyContent: 'space-between', paddingVertical: 16}}>
+        <View>
+          <Text style={{color: '#909090', fontSize: 14, fontFamily: 'sora', fontWeight: '400', lineHeight: 16.80,}}>
+            Price
+          </Text>
+          <Text style={styles.price}>
+            $ 4.53
+          </Text>
+        </View>
+        <TouchableOpacity style={styles.buyBtn} onPress={() => router.push('Cart')}>
+          <Text style={styles.buyText}>
+            Buy Now
+          </Text>
+        </TouchableOpacity>
+      </View>
+    </ScrollView>
   )
 }
 
-export default Detail
+function SizeSelection({price, title, onPress, value}) {
+  return(
+    <TouchableOpacity style={[styles.sizeBtn, {borderColor: value === title?'#C67C4E':'#E3E3E3'}]} onPress={() => onPress(title)}>
+      <Text style={styles.sizeText} >
+        {title}
+      </Text>
+    </TouchableOpacity>
+  );  
+}
 
 const styles = StyleSheet.create({
   container:{
     flex: 1,
-    marginHorizontal: 24
+    marginHorizontal: 24,
   },
   head:{
-    marginTop: 68,
+    marginTop: 60,
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -104,5 +183,43 @@ const styles = StyleSheet.create({
     fontFamily: 'sora',
     fontWeight: '300',
     lineHeight: 21,
+  },
+  sizeBtn:{
+    borderColor: '#E3E3E3',
+    borderRadius: 12,
+    borderWidth: 1,
+    width: 96,
+    height: 41,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  sizeText:{
+    color: '#242424',
+    fontSize: 14,
+    fontFamily: 'sora',
+    fontWeight: '400',
+    lineHeight: 21,
+  },
+  price:{
+    color: '#C67C4E',
+    fontSize: 18,
+    fontFamily: 'sora',
+    fontWeight: '600',
+    lineHeight: 27,
+  },
+  buyBtn:{
+    width: 217,
+    height: 56,
+    backgroundColor: '#C67C4E',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 16,
+  },
+  buyText:{
+    color: '#fff',
+    fontSize: 16,
+    fontFamily: 'sora',
+    fontWeight: '600',
+    lineHeight: 24,
   }
 })

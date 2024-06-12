@@ -7,6 +7,7 @@ const _layout = () => {
     <Stack>
         <Stack.Screen name='Management' />
         <Stack.Screen name='Detail'  options={{headerShown: false}}/>
+        <Stack.Screen name='Order'  options={{headerShown: false}}/>
     </Stack>
   )
 }
