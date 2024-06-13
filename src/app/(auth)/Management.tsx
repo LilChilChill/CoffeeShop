@@ -2,7 +2,6 @@ import { StyleSheet, Text, View, TextInput, Image, SafeAreaView, FlatList, Touch
 import React, { useState, useEffect} from 'react'
 import { router } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
-import { get } from 'react-native/Libraries/TurboModule/TurboModuleRegistry'
 
 const Testing = () => {
   // const [data, setData] = useState("")
@@ -13,11 +12,16 @@ const Testing = () => {
   const [coffeePrice, setCoffeeePrice] = useState("")
 
   useEffect(() =>{
-    fetchData()
-  })
+    fetchData();
+  }, [])
+  useEffect((id, name, price) =>{
+    addProduct(id, name, price);
+    updateProduct(id, name, price);
+    deleteProduct(id)
+  }, [])
 
   const fetchData = (() => {
-    fetch("http://10.103.6.157:3000/coffee/")
+    fetch("http://10.103.6.120:3000/coffee")
     .then(res => res.json())
     .then(json => {
       setCoffeee(json)
@@ -34,12 +38,7 @@ const Testing = () => {
       <Text>LOADING ....</Text>
     </View>
   }
-
-  const getProduct =(id) => {
-    fetch(`http://10.103.6.157:3000/coffee/${id}`)
-    .then(res => res.json())
-    .then((data) => console.log(data))
-  }
+  
   const addProduct = (id, name, price) => {
     fetch(`http://10.103.6.157:3000/coffee`,{
       method: "POST",

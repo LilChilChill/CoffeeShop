@@ -4,15 +4,16 @@ import { Ionicons } from '@expo/vector-icons'
 import React, { useEffect, useState } from 'react';
 import { Redirect, router } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Toast from 'react-native-toast-message';
+
 
 export default function Product(){
   const [product, setProduct] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filteredProduct, setFilteredProduct] = useState([])
-  const [itemCategory, setItemCategory] = useState([])
   
   useEffect(() => {
-    fetch(`http://10.103.6.120:3000/coffee/?category=${itemCategory}`)
+    fetch(`http://10.103.6.120:3000/coffee`)
     // fetch('http://localhost:3000/coffee')
       .then(response => response.json())
       .then(json => {
@@ -26,7 +27,27 @@ export default function Product(){
       });
   }, []);
 
-  
+  const showToast = () => {
+    Toast.show({
+      type:'success',
+      position: 'bottom',
+      text1: 'Success',
+      text2: 'Add to cart',
+      visibilityTime: 3000,
+      autoHide: true,
+      topOffset: 60,
+      bottomOffset: 40,
+    });
+  }
+
+  const addToCart = async () => {
+    try{
+
+    } catch(error) {
+      console.log(error)
+    }
+
+  }
   
   return (
     <View style={styles.container}>
@@ -39,9 +60,17 @@ export default function Product(){
             <TouchableOpacity style={styles.card} onPress={() => router.push('Detail')}>
               <View >
                 <Image source={{ uri: item.image_url }} style={styles.image} />
-                <Text style={styles.title}>Name: {item.name}</Text>
+                <Text style={styles.title}>{item.name}</Text>
                 {/* <Text style={styles.text}>Description: {item.description}</Text> */}
-                <Text style={styles.text}>Price: {item.price}</Text>
+                <View style={{display: 'flex', flexDirection: 'row',justifyContent: 'space-between', marginTop: 12}}>
+                  <Text style={styles.price}>$ {item.price}</Text>
+                  <TouchableOpacity 
+                    style={{width: 32, height: 32, backgroundColor:'#C67C4E', alignItems: 'center', justifyContent: 'center', borderRadius: 8}}
+                    onPress={() => showToast()}
+                    >
+                    <Ionicons name='add-outline' size={24} color={'#fff'}/>
+                  </TouchableOpacity>
+                </View>
               </View>
               <TouchableOpacity style={{position: 'absolute', top: 10, left: 10}} >
                 <Ionicons name='heart-outline' size={20} />
@@ -62,10 +91,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     position: 'relative',
-    top: -50,
+    top: -60,
     padding: 10,
     marginHorizontal: 10,
-    marginBottom: -50,
+    marginBottom: -70,
     fontSize: 10,
 
   },
@@ -75,7 +104,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   card: {
-    backgroundColor: '#e6e6e6',
+    backgroundColor: '#fff',
     borderRadius: 8,
     padding: 10,
     marginVertical: 10,
@@ -85,17 +114,22 @@ const styles = StyleSheet.create({
 
   },
   image: {
-    width: '100%',
-    height: 120,
+    width: 140,
+    height: 140,
     borderRadius: 8,
   },
   title: {
-    fontSize: 12,
-    fontWeight: 'bold',
-    marginTop: 10,
+    color: '#242424',
+    fontSize: 16,
+    fontFamily: 'sora',
+    fontWeight: '600',
+    lineHeight: 24,
   },
-  text:{
-    fontSize: 10,
-    marginTop: 10,
+  price:{
+    color: '#050505',
+    fontSize: 18,
+    fontFamily: 'sora',
+    fontWeight: '600',
+    lineHeight: 27,
   }
 });

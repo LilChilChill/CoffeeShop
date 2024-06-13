@@ -106,7 +106,7 @@ const  Home = () => {
           showsHorizontalScrollIndicator={false}
         />
       </View>
-      <Product onChange={selectedCategory} />
+      <Product />
     </View>
   )
 }
@@ -116,7 +116,7 @@ export default Home
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#EDEDED',
 
   },
   headerContainer:{

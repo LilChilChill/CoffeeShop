@@ -3,29 +3,24 @@ import React, { useState } from 'react'
 import { Ionicons } from '@expo/vector-icons'
 import { router } from 'expo-router'
 import ReadMore from '@fawazahmed/react-native-read-more'
+
+
 export default function Detail() {
-  const [sizeSelected, setSizeSelected] = useState(null)
+  const [sizeSelected, setSizeSelected] = useState('M')
   const [favoriteItems, setFavoriteItem] = useState([])
+  const [price, setPrice] = useState(4.53)
   
   const handleSelected = (value) =>{
     setSizeSelected(value)
-  }
-
-  _renderTruncatedFooter = (handlePress) => {
-    return (
-      <Text style={{
-        color: '#C67C4E',
-        fontSize: 14,
-        fontFamily: 'Sora',
-        fontWeight: '600',
-        lineHeight: 21,
-      }} onPress={handlePress}>
-        more
-      </Text>
-    );
-  }
-
-
+    if(value == "S"){
+      setPrice(3.53)
+    } else if (value == 'M'){
+      setPrice(4.53)
+    } else if (value =='L'){
+      setPrice(5.53)
+    }
+  } 
+  
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       <StatusBar backgroundColor={'#000'} />
@@ -98,7 +93,7 @@ export default function Detail() {
       </Text>
 
       <View style={{marginTop: 8}}>
-        <ReadMore style={styles.description} numberOfLines={3} renderTruncatedFooter={this._renderTruncatedFooter}> 
+        <ReadMore style={styles.description} numberOfLines={3}> 
           Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eaque earum ad illo delectus! Exercitationem, sequi natus. Accusamus voluptas, doloribus vero magni itaque placeat quos sequi dicta. Laborum corrupti aliquam hic?
         </ReadMore>
       </View>
@@ -138,10 +133,10 @@ export default function Detail() {
             Price
           </Text>
           <Text style={styles.price}>
-            $ 4.53
+            $ {price}
           </Text>
         </View>
-        <TouchableOpacity style={styles.buyBtn} onPress={() => router.push('Cart')}>
+        <TouchableOpacity style={styles.buyBtn} onPress={() => router.push('Order')}>
           <Text style={styles.buyText}>
             Buy Now
           </Text>
@@ -151,16 +146,18 @@ export default function Detail() {
   )
 }
 
-function SizeSelection({price, title, onPress, value}) {
+function SizeSelection({ title, onPress, value}) {
   return(
-    <TouchableOpacity style={[styles.sizeBtn, {borderColor: value === title?'#C67C4E':'#E3E3E3'}]} onPress={() => onPress(title)}>
-      <Text style={styles.sizeText} >
+    <TouchableOpacity 
+      style={[styles.sizeBtn, {borderColor: value === title?'#C67C4E':'#E3E3E3', backgroundColor: value === title? '#F9F2ED' : '#E3E3E3'}]} 
+      onPress={() => onPress(title)}
+      >
+      <Text style={[styles.sizeText, {color: value === title ? '#C67C4E' : '#000' }]} >
         {title}
       </Text>
     </TouchableOpacity>
   );  
 }
-
 const styles = StyleSheet.create({
   container:{
     flex: 1,

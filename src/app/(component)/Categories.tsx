@@ -10,7 +10,7 @@ const Categories = ({item, selectedCategory, setSelectedCategory}) => {
             borderRadius: 6,
             color: '#FFF',
             width: 87,
-            height: 29
+            height: 29,
         }]}>{item}</Text>
         </View>
     </TouchableOpacity>
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         alignContent: 'center',
-        backgroundColor: '#fff',
+        backgroundColor: '#EDEDED',
     },
     text:{
         color: '#313131',
@@ -35,6 +35,6 @@ const styles = StyleSheet.create({
         lineHeight: 21,
         width: 87,
         height: 29,
-        textAlign: 'center'
+        textAlign: 'center',
     }
 })
