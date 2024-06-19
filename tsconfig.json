@@ -10,6 +10,8 @@
   },
   "include": [
     "**/*.ts",
+    "**/*.js",
+    "**/*.json",
     "**/*.tsx",
     ".expo/types/**/*.ts",
     "expo-env.d.ts"

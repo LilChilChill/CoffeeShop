@@ -1,59 +1,42 @@
-import { View, Text,StyleSheet, Image, FlatList, ScrollView, TouchableOpacity, Touchable } from 'react-native'
+import { View, Text,StyleSheet, Image, FlatList, ScrollView, TouchableOpacity, Touchable, Alert } from 'react-native'
 import  { ProductsData}  from '../../constants/data.js'
 import { Ionicons } from '@expo/vector-icons'
 import React, { useEffect, useState } from 'react';
 import { Redirect, router } from 'expo-router';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import Toast from 'react-native-toast-message';
+import { useDispatch, useSelector } from 'react-redux';
+import {fetchProducts} from '../../actions/productActions.js'
+import { addToCart } from '@/src/actions/cartActions.js';
 
 
 export default function Product(){
-  const [product, setProduct] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [filteredProduct, setFilteredProduct] = useState([])
-  
+ 
+  const dispatch = useDispatch();
+  const products = useSelector((state) => state.products.products);
+  const loading = useSelector((state) => state.products.loading);
+  const error = useSelector((state) => state.products.error);
+
   useEffect(() => {
-    fetch(`http://10.103.6.120:3000/coffee`)
-    // fetch('http://localhost:3000/coffee')
-      .then(response => response.json())
-      .then(json => {
-        setProduct(json);
-        setFilteredProduct(json)
-        setLoading(false);
-      })
-      .catch(error => {
-        console.error('Error:', error);
-        setLoading(false);
-      });
-  }, []);
+    dispatch(fetchProducts());
+  }, [dispatch]);
 
-  const showToast = () => {
-    Toast.show({
-      type:'success',
-      position: 'bottom',
-      text1: 'Success',
-      text2: 'Add to cart',
-      visibilityTime: 3000,
-      autoHide: true,
-      topOffset: 60,
-      bottomOffset: 40,
-    });
+  const handleAddToCart = (product) => {
+    dispatch(addToCart({ ...product, quantity: 1 }));
+    Alert.alert('Add to Cart successfully')
+  };
+
+  if (loading) {
+    return <Text>Loading...</Text>;
   }
 
-  const addToCart = async () => {
-    try{
-
-    } catch(error) {
-      console.log(error)
-    }
-
+  if (error) {
+    return <Text>Error: {error}</Text>;
   }
-  
+
   return (
     <View style={styles.container}>
         <FlatList
-          data={product}
-          keyExtractor={(item, index) => index.toString()}
+          data={products}
+          keyExtractor={(item) => item.id.toString()}
           numColumns={2}
           showsVerticalScrollIndicator={false}
           renderItem={({ item }) => (
@@ -66,7 +49,7 @@ export default function Product(){
                   <Text style={styles.price}>$ {item.price}</Text>
                   <TouchableOpacity 
                     style={{width: 32, height: 32, backgroundColor:'#C67C4E', alignItems: 'center', justifyContent: 'center', borderRadius: 8}}
-                    onPress={() => showToast()}
+                    onPress={() => handleAddToCart(item)}
                     >
                     <Ionicons name='add-outline' size={24} color={'#fff'}/>
                   </TouchableOpacity>
