@@ -2,6 +2,7 @@ import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Image, Alert } fr
 import React, { useState } from 'react'
 import { Ionicons } from '@expo/vector-icons'
 import { router } from 'expo-router'
+import Toast from 'react-native-toast-message' 
 
 const Order = () => {
   const [productNum, setProductNum] = useState(1)
@@ -36,6 +37,15 @@ const Order = () => {
   const handleOrder = () => {
     Alert.alert('Order successfully')
   }
+
+  const showToast = () => {
+    Toast.show({
+      type: 'success',
+      text1: 'Hello',
+      text2: 'This is some something 👋'
+    });
+  }
+
   return (
     <ScrollView style={styles.container}>
       <View style={styles.head}>

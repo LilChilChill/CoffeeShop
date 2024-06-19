@@ -6,16 +6,29 @@ import { Ionicons } from '@expo/vector-icons';
 
 const CartScreen = () => {
 
+  const [deliveryFee, setDeliveryFee] = useState(1.00)
+  const [deliveryFeeDiscount, setDeliveryFeeDiscount] = useState('$ 2.00')
+
   let total = 0
+  let totalBill = 0
   const items = useSelector((state) => state.cart.items)
 
   items.forEach(item => (
-    total += item.price * item.quantity + 1
+    total += item.price * item.quantity,
+    // totalBill += item.price * item.quantity + deliveryFee
+    totalBill += total + deliveryFee
   ))
 
   const [selection, setSelection] = useState(null)
   const handleSelection = (value) => {
     setSelection(value)
+    if(value == 'Delivery'){
+      setDeliveryFee(1.00)
+      setDeliveryFeeDiscount('$ 2.00')
+    } else {
+      setDeliveryFee(0.00)
+      setDeliveryFeeDiscount('')
+    }
   }
   const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cart.items);
@@ -137,12 +150,12 @@ const CartScreen = () => {
             Payment Summary
           </Text>
           <View style={{display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
-          <Text style={styles.paymentPrice}>
-            Price
-          </Text>
-          <Text>
-            $ 
-          </Text>
+            <Text style={styles.paymentPrice}>
+              Price
+            </Text>
+            <Text>
+              $ {total}
+            </Text>
           </View>
           <View style={{display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
             <Text style={styles.paymentDelivery}>
@@ -150,10 +163,10 @@ const CartScreen = () => {
             </Text>
             <View style={{display: 'flex', flexDirection: 'row', alignItems: 'center',}}>
               <Text style={styles.paymentDeliveryDiscount}>
-                $ 2.00
+                {deliveryFeeDiscount}
               </Text>
               <Text style={styles.paymentDeliveryAfterDiscount}>
-                $ 1.00
+                $ {deliveryFee}.00
               </Text>
             </View>
           </View>
@@ -168,7 +181,7 @@ const CartScreen = () => {
                   Cash/Wallet
                 </Text>
                 <Text style={styles.total}>
-                  $ {total}
+                  $ {totalBill}
                 </Text>
               </View>
             </View>

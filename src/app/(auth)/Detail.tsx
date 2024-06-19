@@ -1,11 +1,11 @@
 import { StyleSheet, Text, View, SafeAreaView,TouchableOpacity, Image, StatusBar, ScrollView, Alert} from 'react-native'
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import { Ionicons } from '@expo/vector-icons'
 import { router } from 'expo-router'
-import ReadMore from '@fawazahmed/react-native-read-more'
+import ViewMoreText from 'react-native-view-more-text'
 
 
-export default function Detail() {
+export default function Detail( props) {
   const [sizeSelected, setSizeSelected] = useState('M')
   const [favoriteItems, setFavoriteItem] = useState([])
   const [price, setPrice] = useState(4.53)
@@ -20,6 +20,16 @@ export default function Detail() {
       setPrice(5.53)
     }
   } 
+  const renderViewMore = (onPress) => {
+    return(
+      <Text onPress={onPress} style={{color: '#C67C4E', fontWeight: 'bold', position: 'absolute', bottom: -15, right: 0}}>Read more</Text>
+    )
+  }
+  const renderViewLess = (onPress) => {
+    return(
+      <Text onPress={onPress} style={{color: '#C67C4E', fontWeight: 'bold', position: 'absolute', bottom: 0, right: 90}}>Read less</Text>
+    )
+  }
   
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
@@ -33,7 +43,7 @@ export default function Detail() {
           Detail
         </Text>
         <TouchableOpacity 
-          onPress={() => alert('Add to wishlish success')}
+          
         >
           <Ionicons name='heart-outline' size={24}/>
         </TouchableOpacity>
@@ -93,9 +103,15 @@ export default function Detail() {
       </Text>
 
       <View style={{marginTop: 8}}>
-        <ReadMore style={styles.description} numberOfLines={3}> 
+        <ViewMoreText  
+          numberOfLines={2} 
+          renderViewLess={renderViewLess}
+          renderViewMore={renderViewMore}
+        > 
+          <Text style={styles.description}>
           Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eaque earum ad illo delectus! Exercitationem, sequi natus. Accusamus voluptas, doloribus vero magni itaque placeat quos sequi dicta. Laborum corrupti aliquam hic?
-        </ReadMore>
+          </Text>
+        </ViewMoreText>
       </View>
 
       <Text style={{
@@ -171,7 +187,6 @@ const styles = StyleSheet.create({
   },
   productImg:{
     marginTop: 24,
-    display: 'flex',
     alignItems: 'center',
   },
   description:{
